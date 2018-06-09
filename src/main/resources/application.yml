@@ -17,4 +17,3 @@ spring:
       enabled: true
       path: /h2-console
 
-
