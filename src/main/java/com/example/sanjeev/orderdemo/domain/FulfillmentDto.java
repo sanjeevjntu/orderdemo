@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +29,7 @@ public class FulfillmentDto implements Serializable {
     private String rateplanid;
     @Email(message = "email.is.not.valid")
     private String email;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDateTime timestamp;
 }

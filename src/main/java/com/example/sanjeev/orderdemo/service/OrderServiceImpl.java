@@ -32,4 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
         return fulfillment;
     }
+
+    @Override
+    public List<Fulfillment> getFulfillmentByVin(String vin) {
+        return fulfillmentRepository.findAllByVin(vin);
+    }
 }

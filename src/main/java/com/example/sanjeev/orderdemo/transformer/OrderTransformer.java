@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,9 @@ public class OrderTransformer {
                 .rateplanid(fulfillment.getRateplanid())
                 .sku(fulfillment.getSku())
                 .vin(fulfillment.getVin())
+                .startDate(fulfillment.getStartDate())
+                .endDate(fulfillment.getEndDate())
+                .timestamp(LocalDateTime.now())
                 .build();
     }
 
@@ -30,18 +34,21 @@ public class OrderTransformer {
                 .rateplanid(fulfillmentDto.getRateplanid())
                 .sku(fulfillmentDto.getSku())
                 .vin(fulfillmentDto.getVin())
+                .startDate(fulfillmentDto.getStartDate())
+                .endDate(fulfillmentDto.getEndDate())
                 .build();
     }
 
-    public List<FulfillmentDto> domainsTodtoList(List<Fulfillment> fulfillmentList) {
-
-        return fulfillmentList.stream().map(this::domainToDto)
+    public List<FulfillmentDto> domainsToDtos(List<Fulfillment> fulfillmentList) {
+        return fulfillmentList.stream()
+                .map(this::domainToDto)
                 .collect(Collectors.toList());
 
     }
 
     public List<Fulfillment> dtosToDomains(List<FulfillmentDto> fulfillmentDtos) {
-        return fulfillmentDtos.stream().map(this::dtoToDomain)
+        return fulfillmentDtos.stream()
+                .map(this::dtoToDomain)
                 .collect(Collectors.toList());
     }
 

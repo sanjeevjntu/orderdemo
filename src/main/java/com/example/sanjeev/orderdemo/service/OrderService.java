@@ -10,4 +10,7 @@ public interface OrderService {
     List<Fulfillment> createOrder(List<Fulfillment> fulfillments);
 
     Fulfillment getOrder(String fulfillmentId);
+
+    List<Fulfillment> getFulfillmentByVin(String vin);
 }
+
