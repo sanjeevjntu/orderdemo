@@ -17,7 +17,6 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
- *
  * @RequiredArgsConstructor considers only final and constants
  */
 @Slf4j
@@ -27,7 +26,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderTransformer orderTransformer;
-    private String urlPath ;
+    private String urlPath;
 
     @ApiOperation(value = "getOrders", produces = APPLICATION_JSON_VALUE)
     @GetMapping(path = "/orders", produces = APPLICATION_JSON_VALUE)
@@ -37,12 +36,12 @@ public class OrderController {
         return ResponseEntity.ok().body(orderTransformer.domainsToDtos(fulfillments));
     }
 
-    @PostMapping(path = "/orders",  consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/orders", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FulfillmentDto>> createOrder(@RequestBody final List<FulfillmentDto> fulfillmentDtos,
                                                             @RequestHeader(value = "application-id") String applicationId) {
 
-        if(Strings.isNullOrEmpty(applicationId)){
-            throw  new RuntimeException("application-id is null or empty");
+        if (Strings.isNullOrEmpty(applicationId)) {
+            throw new RuntimeException("application-id is null or empty");
         }
 
         List<Fulfillment> fulfillments = orderService.createOrder(orderTransformer.dtosToDomains(fulfillmentDtos));
@@ -59,10 +58,10 @@ public class OrderController {
 
     }
 
-    @ApiOperation(value= "getOrders By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN")
-    @GetMapping(path="/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FulfillmentDto>> getFulfillmentByVin(@RequestParam String vin){
-        return  ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
+    @ApiOperation(value = "getOrders By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN")
+    @GetMapping(path = "/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FulfillmentDto>> getFulfillmentByVin(@RequestParam String vin) {
+        return ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
 
     }
 

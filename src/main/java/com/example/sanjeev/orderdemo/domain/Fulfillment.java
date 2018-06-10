@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -19,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "FULFILLMENT")
 @EntityListeners(AuditingEntityListener.class)
-public class Fulfillment extends BaseEntity{
+public class Fulfillment extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
