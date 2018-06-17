@@ -1,7 +1,7 @@
 package com.example.sanjeev.orderdemo.controller;
 
-import com.example.sanjeev.orderdemo.domain.Fulfillment;
 import com.example.sanjeev.orderdemo.domain.FulfillmentDto;
+import com.example.sanjeev.orderdemo.repository.Fulfillment;
 import com.example.sanjeev.orderdemo.service.OrderService;
 import com.example.sanjeev.orderdemo.transformer.OrderTransformer;
 import com.google.common.base.Strings;
@@ -51,17 +51,27 @@ public class OrderController {
                 .body(orderTransformer.domainsToDtos(fulfillments));
     }
 
-    @GetMapping(path = "/orders/{fulfillmentId}", produces = APPLICATION_JSON_VALUE)
+  /*  @GetMapping(path = "/orders/{fulfillmentId}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<FulfillmentDto> getFulfillment(@PathVariable String fulfillmentId) {
 
         return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getOrder(fulfillmentId)));
 
-    }
+    }*/
 
     @ApiOperation(value = "getOrders By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN")
     @GetMapping(path = "/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FulfillmentDto>> getFulfillmentByVin(@RequestParam String vin) {
         return ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
+
+    }
+    @ApiOperation(value = "getOrders By VIN and SKU", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN and SKU")
+    @GetMapping(value = "/orders/byvinsku", params = {"vin", "country", "state", "customerType"}, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<FulfillmentDto> getFulfillmentByVinSku(@RequestParam String vin,
+                                                                 @RequestParam String country,
+                                                                 @RequestParam String state,
+                                                                 @RequestParam String customerType){
+
+        return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getFulfillmentByVinAndSku(vin, country, state, customerType )));
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.sanjeev.orderdemo.domain;
+package com.example.sanjeev.orderdemo.repository;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,7 +1,8 @@
 package com.example.sanjeev.orderdemo.service;
 
-import com.example.sanjeev.orderdemo.domain.Fulfillment;
 import com.example.sanjeev.orderdemo.rabbitmq.OrderPublisher;
+import com.example.sanjeev.orderdemo.repository.Fulfillment;
+import com.example.sanjeev.orderdemo.repository.FulfillmentRepository;
 import com.example.sanjeev.orderdemo.transformer.OrderTransformer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +23,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Fulfillment> getOrders() {
-        List<Fulfillment> fulfillments = newArrayList();
         return fulfillmentRepository.findAll();
     }
 
@@ -34,8 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
         List<Fulfillment> fulfillmentsSaved = fulfillmentRepository.saveAll(fulfillments);
 
+        log.info("fulfillmentsSaved:{}", fulfillmentsSaved);
         orderTransformer.domainsToDtos(fulfillmentsSaved)
-                .forEach(fulfillmentDto -> orderPublisher.publishOrder(fulfillmentDto));
+                .forEach(orderPublisher::publishOrder);
 
         return fulfillmentsSaved;
 
@@ -43,7 +42,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Fulfillment getOrder(String fulfillmentId) {
-        Fulfillment fulfillment = fulfillmentRepository.getOne(UUID.fromString(fulfillmentId));
+        Fulfillment fulfillment = fulfillmentRepository.findById(UUID.fromString(fulfillmentId))
+                .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
         log.info("Fulfillment: {}", fulfillment);
 
         return fulfillment;
@@ -52,5 +52,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Fulfillment> getFulfillmentByVin(String vin) {
         return fulfillmentRepository.findAllByVin(vin);
+    }
+
+    @Override
+    public Fulfillment getFulfillmentByVinAndSku(String vin, String country, String state, String customerType){
+
+        return fulfillmentRepository.findByVinAndCountryAndStateAndCustomerType(vin, country,state,customerType)
+                // .map(OrderServiceImpl::apply)
+                .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
+
     }
 }

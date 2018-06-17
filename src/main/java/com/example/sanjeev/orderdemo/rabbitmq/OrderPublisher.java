@@ -24,10 +24,17 @@ public class OrderPublisher {
         this.topicExchange = topicExchange;
     }
 
+    /**
+     * Easiest way to convert to string is using Gson, but it is boilerplate code and date issue
+     *
+     * @param fulfillmentDto
+     */
     public void publishOrder(FulfillmentDto fulfillmentDto) {
         log.info("topicExchange :{}", topicExchange);
         log.info("orderRoutingKey :{}", orderRoutingKey);
         log.info("fulfillmentDto :{}", fulfillmentDto);
+
+        //rabbitTemplate.convertAndSend(topicExchange.getName(), orderRoutingKey, new Gson().toJson(fulfillmentDto));
         rabbitTemplate.convertAndSend(topicExchange.getName(), orderRoutingKey, fulfillmentDto);
     }
 

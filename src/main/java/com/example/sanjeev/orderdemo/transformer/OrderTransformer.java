@@ -1,12 +1,11 @@
 package com.example.sanjeev.orderdemo.transformer;
 
-import com.example.sanjeev.orderdemo.domain.Fulfillment;
 import com.example.sanjeev.orderdemo.domain.FulfillmentDto;
+import com.example.sanjeev.orderdemo.repository.Fulfillment;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,9 @@ public class OrderTransformer {
                 .vin(fulfillment.getVin())
                 .startDate(fulfillment.getStartDate())
                 .endDate(fulfillment.getEndDate())
-                .timestamp(LocalDateTime.now())
+                .country(fulfillment.getCountry())
+                .state(fulfillment.getState())
+                .customerType(fulfillment.getCustomerType())
                 .build();
     }
 
@@ -36,6 +37,9 @@ public class OrderTransformer {
                 .vin(fulfillmentDto.getVin())
                 .startDate(fulfillmentDto.getStartDate())
                 .endDate(fulfillmentDto.getEndDate())
+                .country(fulfillmentDto.getCountry())
+                .state(fulfillmentDto.getState())
+                .customerType(fulfillmentDto.getCustomerType())
                 .build();
     }
 
