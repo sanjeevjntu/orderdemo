@@ -55,9 +55,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Fulfillment getFulfillmentByVinAndSku(String vin, String country, String state, String customerType){
+    public Fulfillment getFulfillmentByVinAndSku(String vin, String country, String state, String customerType) {
 
-        return fulfillmentRepository.findByVinAndCountryAndStateAndCustomerType(vin, country,state,customerType)
+        return fulfillmentRepository.findByVinAndCountryAndStateAndCustomerType(vin, country, state, customerType)
                 // .map(OrderServiceImpl::apply)
                 .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
 

@@ -64,14 +64,15 @@ public class OrderController {
         return ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
 
     }
+
     @ApiOperation(value = "getOrders By VIN and SKU", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN and SKU")
     @GetMapping(value = "/orders/byvinsku", params = {"vin", "country", "state", "customerType"}, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<FulfillmentDto> getFulfillmentByVinSku(@RequestParam String vin,
                                                                  @RequestParam String country,
                                                                  @RequestParam String state,
-                                                                 @RequestParam String customerType){
+                                                                 @RequestParam String customerType) {
 
-        return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getFulfillmentByVinAndSku(vin, country, state, customerType )));
+        return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getFulfillmentByVinAndSku(vin, country, state, customerType)));
 
     }
 
