@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -37,7 +38,7 @@ public class OrderController {
     }
 
     @PostMapping(path = "/orders", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FulfillmentDto>> createOrder(@RequestBody final List<FulfillmentDto> fulfillmentDtos,
+    public ResponseEntity<List<FulfillmentDto>> createOrder(@RequestBody @Validated List<FulfillmentDto> fulfillmentDtos,
                                                             @RequestHeader(value = "application-id") String applicationId) {
 
         if (Strings.isNullOrEmpty(applicationId)) {
@@ -49,6 +50,21 @@ public class OrderController {
         return ResponseEntity
                 .created(URI.create("/orders/"))
                 .body(orderTransformer.domainsToDtos(fulfillments));
+    }
+
+    @PostMapping(path = "/fulfillments", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<FulfillmentDto> createFulfillment(@RequestBody @Validated FulfillmentDto fulfillmentDto,
+                                                            @RequestHeader(value = "application-id") String applicationId) {
+
+        if (Strings.isNullOrEmpty(applicationId)) {
+            throw new RuntimeException("application-id is null or empty");
+        }
+
+        Fulfillment fulfillment = orderService.createFulfillment(orderTransformer.dtoToDomain(fulfillmentDto));
+
+        return ResponseEntity
+                .created(URI.create("/fulfillments/"))
+                .body(orderTransformer.domainToDto(fulfillment));
     }
 
   /*  @GetMapping(path = "/orders/{fulfillmentId}", produces = APPLICATION_JSON_VALUE)
@@ -74,6 +90,13 @@ public class OrderController {
 
         return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getFulfillmentByVinAndSku(vin, country, state, customerType)));
 
+    }
+
+
+    @RequestMapping(value = "*", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+    @ResponseBody
+    public String allFallback() {
+        return "Fallback for All Requests";
     }
 
 

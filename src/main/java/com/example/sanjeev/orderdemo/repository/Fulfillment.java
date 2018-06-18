@@ -17,7 +17,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "FULFILLMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"VIN", "COUNTRY", "STATE", "CUSTOMER_TYPE"}, name = "unique_constraint_vin_country_state_customertype"))
+@Table(name = "FULFILLMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"VIN", "COUNTRY", "STATE", "CUSTOMER_TYPE"},
+        name = "unique_constraint_vin_country_state_customertype"))
 @EntityListeners(AuditingEntityListener.class)
 public class Fulfillment extends BaseEntity {
 
@@ -39,7 +40,7 @@ public class Fulfillment extends BaseEntity {
 
     @NotBlank
     private String country;
-
+    @NotBlank
     private String state;
     @NotBlank
     @Column(name = "CUSTOMER_TYPE")

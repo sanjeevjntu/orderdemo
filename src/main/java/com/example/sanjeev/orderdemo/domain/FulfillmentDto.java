@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -20,21 +22,24 @@ public class FulfillmentDto implements Serializable {
 
     private String fulfillmentId;
 
-    @NotBlank
+    @NotBlank(message = "vin.not.valid")
     private String vin;
-    @NotBlank
+    @NotBlank(message = "sku.not.valid")
     private String sku;
-    @NotBlank
+    @NotBlank(message = "rateplanid.not.valid")
     private String rateplanid;
     @Email(message = "email.is.not.valid")
     private String email;
+
+    @PastOrPresent(message = "startdate.past")
     private LocalDate startDate;
+    @Future(message = "endDate.futuredate")
     private LocalDate endDate;
 
-    @NotBlank
+    @NotBlank(message = "country.not.valid")
     private String country;
 
     private String state;
-    @NotBlank
+    @NotBlank(message = "customerType.not.valid")
     private String customerType;
 }

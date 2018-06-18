@@ -14,6 +14,8 @@ public interface OrderService {
     List<Fulfillment> getFulfillmentByVin(String vin);
 
     Fulfillment getFulfillmentByVinAndSku(String vin, String country, String state, String customerType);
+
+    Fulfillment createFulfillment(Fulfillment fulfillment);
 }
 
 

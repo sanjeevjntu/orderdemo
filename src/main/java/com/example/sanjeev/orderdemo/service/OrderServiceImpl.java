@@ -59,7 +59,13 @@ public class OrderServiceImpl implements OrderService {
 
         return fulfillmentRepository.findByVinAndCountryAndStateAndCustomerType(vin, country, state, customerType)
                 // .map(OrderServiceImpl::apply)
-                .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
+                // .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
+                .orElseGet(Fulfillment.builder()::build);
 
+    }
+
+    @Override
+    public Fulfillment createFulfillment(Fulfillment fulfillment) {
+        return fulfillmentRepository.save(fulfillment);
     }
 }
