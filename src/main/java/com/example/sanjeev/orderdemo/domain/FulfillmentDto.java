@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Future;
@@ -42,4 +43,7 @@ public class FulfillmentDto implements Serializable {
     private String state;
     @NotBlank(message = "customerType.not.valid")
     private String customerType;
+
+    @CreditCardNumber(message = "credit.card.is.not.valid")
+    private String creditCard;
 }
