@@ -6,6 +6,7 @@ spring:
       ddl-auto: update
     generate-ddl: true
     show-sql: true
+    format-sql: true
 
   datasource:
     data-username: sa
