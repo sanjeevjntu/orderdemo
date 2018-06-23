@@ -22,15 +22,25 @@ spring:
     date-format: yyyy-MM-dd
 
 #com.fasterxml.jackson.databind.util.ISO8601DateFormat
-#    deserialization.*: true
-#    serialization.*: true
 
+#Rabbitmq Configuration
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
 
+#Redis Configuration
+  cache:
+    type: redis
+    redis:
+      time-to-live: 30000ms
+
+  redis:
+    host: localhost
+    port: 6379
+
+#Queue details
 rabbitmq:
   order:
     exchange: ORDER.EXCHANGE

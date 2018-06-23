@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -20,7 +21,9 @@ import java.util.UUID;
 @Table(name = "FULFILLMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"VIN", "COUNTRY", "STATE", "CUSTOMER_TYPE"},
         name = "unique_constraint_vin_country_state_customertype"))
 @EntityListeners(AuditingEntityListener.class)
-public class Fulfillment extends BaseEntity {
+public class Fulfillment extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 480436373299505041L;
 
     @Id
     @GeneratedValue(generator = "uuid2")

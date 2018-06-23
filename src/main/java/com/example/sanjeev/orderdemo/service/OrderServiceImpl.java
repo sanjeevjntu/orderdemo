@@ -6,6 +6,8 @@ import com.example.sanjeev.orderdemo.repository.FulfillmentRepository;
 import com.example.sanjeev.orderdemo.transformer.OrderTransformer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +52,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Cacheable(value = "getFulfillmentByVin", key = "#vin")
+    @TimeToLive
     public List<Fulfillment> getFulfillmentByVin(String vin) {
         return fulfillmentRepository.findAllByVin(vin);
     }

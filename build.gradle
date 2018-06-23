@@ -38,6 +38,8 @@ dependencies {
     compile('com.google.code.gson:gson')
     compile('io.springfox:springfox-swagger2:2.8.0')
     compile('io.springfox:springfox-swagger-ui:2.8.0')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.batch:spring-batch-test')
 }
