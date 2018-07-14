@@ -27,7 +27,6 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderTransformer orderTransformer;
-    private String urlPath;
 
     @ApiOperation(value = "getOrders", produces = APPLICATION_JSON_VALUE)
     @GetMapping(path = "/orders", produces = APPLICATION_JSON_VALUE)
@@ -67,12 +66,12 @@ public class OrderController {
                 .body(orderTransformer.domainToDto(fulfillment));
     }
 
-  /*  @GetMapping(path = "/orders/{fulfillmentId}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/orders/{fulfillmentId}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<FulfillmentDto> getFulfillment(@PathVariable String fulfillmentId) {
 
         return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getOrder(fulfillmentId)));
 
-    }*/
+    }
 
     @ApiOperation(value = "getOrders By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN")
     @GetMapping(path = "/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
@@ -87,16 +86,7 @@ public class OrderController {
                                                                  @RequestParam String country,
                                                                  @RequestParam String state,
                                                                  @RequestParam String customerType) {
-
         return ResponseEntity.ok(orderTransformer.domainToDto(orderService.getFulfillmentByVinAndSku(vin, country, state, customerType)));
-
-    }
-
-
-    @RequestMapping(value = "*", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-    @ResponseBody
-    public String allFallback() {
-        return "Fallback for All Requests";
     }
 
 
