@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
@@ -38,8 +38,8 @@ public class Fulfillment extends BaseEntity implements Serializable {
     private String rateplanid;
     @NotBlank
     private String email;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private OffsetDateTime startDate;
+    private OffsetDateTime endDate;
 
     @NotBlank
     private String country;

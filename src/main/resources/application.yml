@@ -18,8 +18,8 @@ spring:
       enabled: true
       path: /h2-console
 
-  jackson:
-    date-format: yyyy-MM-dd
+#  jackson:
+#    date-format: yyyy-MM-dd
 
 #com.fasterxml.jackson.databind.util.ISO8601DateFormat
 

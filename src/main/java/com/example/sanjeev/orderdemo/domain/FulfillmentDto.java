@@ -11,7 +11,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Data
 @NoArgsConstructor
@@ -33,9 +33,9 @@ public class FulfillmentDto implements Serializable {
     private String email;
 
     @PastOrPresent(message = "startdate.past")
-    private LocalDate startDate;
+    private OffsetDateTime startDate;
     @Future(message = "endDate.futuredate")
-    private LocalDate endDate;
+    private OffsetDateTime endDate;
 
     @NotBlank(message = "country.not.valid")
     private String country;
