@@ -15,17 +15,7 @@ public class GenerateRandomString {
 
     public  static void main(String[] args) {
 
-        List<Person> personList = Arrays.asList(Person.builder().name("sanjeev").age(37).build(),
-                Person.builder().name("naisha").age(1).build(),
-                Person.builder().name("keerti").age(23).build(),
-                Person.builder().name("rehansh").age(1).build(),
-                Person.builder().name("amruth").age(37).build(),
-                Person.builder().name("reddy").age(23).build(),
-                Person.builder().name("Suman").age(23).build(),
-                Person.builder().name("SSSS").age(1).build(),
-                Person.builder().name("Mahendar").age(37).build(),
-                Person.builder().name("Tipuu").age(23).build()
-        );
+        List<Person> personList = getPeople();
 
         Map<@PositiveOrZero Integer, List<Person>> toImmutableMap = getCollect(personList);
 
@@ -73,6 +63,20 @@ public class GenerateRandomString {
 
         log.info("Average age: {}", averageAge);
 
+    }
+
+    private static List<Person> getPeople() {
+        return Arrays.asList(Person.builder().name("sanjeev").age(37).build(),
+                    Person.builder().name("naisha").age(1).build(),
+                    Person.builder().name("keerti").age(23).build(),
+                    Person.builder().name("rehansh").age(1).build(),
+                    Person.builder().name("amruth").age(37).build(),
+                    Person.builder().name("reddy").age(23).build(),
+                    Person.builder().name("Suman").age(23).build(),
+                    Person.builder().name("SSSS").age(1).build(),
+                    Person.builder().name("Mahendar").age(37).build(),
+                    Person.builder().name("Tipuu").age(23).build()
+            );
     }
 
     private static Map<@PositiveOrZero Integer, List<Person>> getCollect(List<Person> personList) {
