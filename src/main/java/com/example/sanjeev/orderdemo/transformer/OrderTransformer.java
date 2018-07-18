@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +22,8 @@ public class OrderTransformer {
                 .rateplanid(fulfillment.getRateplanid())
                 .sku(fulfillment.getSku())
                 .vin(fulfillment.getVin())
-                .startDate(OffsetDateTime.now())
-                .endDate(OffsetDateTime.now())
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
                 .country(fulfillment.getCountry())
                 .state(fulfillment.getState())
                 .customerType(fulfillment.getCustomerType())
@@ -36,8 +36,8 @@ public class OrderTransformer {
                 .rateplanid(fulfillmentDto.getRateplanid())
                 .sku(fulfillmentDto.getSku())
                 .vin(fulfillmentDto.getVin())
-                .startDate(OffsetDateTime.now())
-                .endDate(OffsetDateTime.now())
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
                 .country(fulfillmentDto.getCountry())
                 .state(fulfillmentDto.getState())
                 .customerType(fulfillmentDto.getCustomerType())

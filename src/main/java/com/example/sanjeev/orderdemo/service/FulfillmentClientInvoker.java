@@ -2,7 +2,7 @@ package com.example.sanjeev.orderdemo.service;
 
 import com.example.sanjeev.orderdemo.repository.Fulfillment;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public interface FulfillmentClientInvoker {
@@ -13,8 +13,8 @@ public interface FulfillmentClientInvoker {
                 .vin("VINDUMMY")
                 .sku("SKUDUMMY")
                 .rateplanid("RATEDUMMY")
-                .startDate(OffsetDateTime.now())
+                .startDate(LocalDate.now())
                 .email("san@dummy.com")
-                .endDate(OffsetDateTime.now()).build();
+                .endDate(LocalDate.now()).build();
     }
 }

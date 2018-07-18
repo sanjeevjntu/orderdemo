@@ -6,20 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
-import java.io.Serializable;
-import java.time.OffsetDateTime;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FulfillmentDto implements Serializable {
-
-    private static final long serialVersionUID = 5472313093825665286L;
+public class FulfillmentDto {
 
     private String fulfillmentId;
 
@@ -32,10 +26,11 @@ public class FulfillmentDto implements Serializable {
     @Email(message = "email.is.not.valid")
     private String email;
 
-    @PastOrPresent(message = "startdate.past")
-    private OffsetDateTime startDate;
+    @FutureOrPresent(message = "startdate.past")
+    private LocalDate startDate;
+
     @Future(message = "endDate.futuredate")
-    private OffsetDateTime endDate;
+    private LocalDate endDate;
 
     @NotBlank(message = "country.not.valid")
     private String country;
@@ -44,6 +39,23 @@ public class FulfillmentDto implements Serializable {
     @NotBlank(message = "customerType.not.valid")
     private String customerType;
 
+    @NotBlank(message = "subscriptionType.not.valid")
+    @Pattern(message = "subscriptionType.not.valid", regexp = "EVERGREEN|TERMED", flags = Pattern.Flag.CASE_INSENSITIVE)
+    private String subscriptionType;
+
     @CreditCardNumber(message = "credit.card.is.not.valid")
     private String creditCard;
+
+    @AssertTrue(message = "endDate.not.valid")
+    private boolean isValidEnddate(){
+         if("TERMED".equals(subscriptionType) && endDate ==null){
+            return false;
+        } else return true; // TERMED, enddate; EVERGREEN, endDate; EVERGREEN, null
+    }
+
+    @AssertTrue(message = "startDate.not.valid")
+    private boolean isValidStartDate() {
+        return (endDate == null && "EVERGREEN".equals(subscriptionType))     ||
+                (startDate != null && startDate.isBefore(endDate));
+    }
 }
