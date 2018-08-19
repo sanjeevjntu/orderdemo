@@ -10,8 +10,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 /**
  * Message date needs to be fixed
  * 1. Any exception in the while listening will put the message to DLQ
@@ -30,7 +28,7 @@ public class OrderSubscriber {
 
         log.info("fulfillmentDto:{}", fulfillmentDto);
 
-        Fulfillment fulfillment = fulfillmentRepository.getOne(UUID.fromString(fulfillmentDto.getFulfillmentId()));
+        Fulfillment fulfillment = fulfillmentRepository.getOne(fulfillmentDto.getFulfillmentId());
 
         fulfillment.setEmail("newEmailUpdated@ddd.com");
         fulfillmentRepository.save(fulfillment);

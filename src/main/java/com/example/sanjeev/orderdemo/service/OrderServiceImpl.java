@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -44,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Fulfillment getOrder(String fulfillmentId) {
-        Fulfillment fulfillment = fulfillmentRepository.findById(UUID.fromString(fulfillmentId))
+        Fulfillment fulfillment = fulfillmentRepository.findById(fulfillmentId)
                 .orElseGet(FulfillmentClientInvoker::getFromClientInvoker);
         log.info("Fulfillment: {}", fulfillment);
 

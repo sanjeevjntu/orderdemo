@@ -28,7 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderTransformer orderTransformer;
 
-    @ApiOperation(value = "getOrders", produces = APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "getOrder", produces = APPLICATION_JSON_VALUE)
     @GetMapping(path = "/orders", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FulfillmentDto>> getOrders() {
 
@@ -47,7 +47,7 @@ public class OrderController {
         List<Fulfillment> fulfillments = orderService.createOrder(orderTransformer.dtosToDomains(fulfillmentDtos));
 
         return ResponseEntity
-                .created(URI.create("/orders/"))
+                .created(URI.create("/order/"))
                 .body(orderTransformer.domainsToDtos(fulfillments));
     }
 
@@ -73,14 +73,14 @@ public class OrderController {
 
     }
 
-    @ApiOperation(value = "getOrders By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN")
+    @ApiOperation(value = "getOrder By VIN", produces = APPLICATION_JSON_VALUE, notes = "getOrder By VIN")
     @GetMapping(path = "/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FulfillmentDto>> getFulfillmentByVin(@RequestParam String vin) {
         return ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
 
     }
 
-    @ApiOperation(value = "getOrders By VIN and SKU", produces = APPLICATION_JSON_VALUE, notes = "getOrders By VIN and SKU")
+    @ApiOperation(value = "getOrder By VIN and SKU", produces = APPLICATION_JSON_VALUE, notes = "getOrder By VIN and SKU")
     @GetMapping(value = "/orders/byvinsku", params = {"vin", "country", "state", "customerType"}, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<FulfillmentDto> getFulfillmentByVinSku(@RequestParam String vin,
                                                                  @RequestParam String country,

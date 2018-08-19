@@ -18,17 +18,22 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "FULFILLMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"VIN", "COUNTRY", "STATE", "CUSTOMER_TYPE"},
-        name = "unique_constraint_vin_country_state_customertype"))
+@Table(name = "SUMO_FULFILLMENT")
+/*@Table(name = "SUMO_FULFILLMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"VIN", "COUNTRY", "STATE", "CUSTOMER_TYPE"},
+        name = "unique_constraint_vin_country_state_customertype"))*/
 @EntityListeners(AuditingEntityListener.class)
 public class Fulfillment extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 480436373299505041L;
+   private static final long serialVersionUID = 480436373299505041L;
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID fulfillmentId;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)// Default startegy is EAGER
+    @JoinColumn(name = "ORDER_ID", nullable = false)
+    private Order order;
 
     @NotBlank
     private String vin;
@@ -48,6 +53,5 @@ public class Fulfillment extends BaseEntity implements Serializable {
     @NotBlank
     @Column(name = "CUSTOMER_TYPE")
     private String customerType;
-
 
 }
