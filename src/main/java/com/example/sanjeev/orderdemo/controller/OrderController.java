@@ -6,8 +6,10 @@ import com.example.sanjeev.orderdemo.service.OrderService;
 import com.example.sanjeev.orderdemo.transformer.OrderTransformer;
 import com.google.common.base.Strings;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  */
 @Slf4j
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
+//@DependsOn()
+//@ConditionalOnMissingBean()
+//@Transactional(isolation = Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW, timeout =1,
+//        noRollbackFor = SQLException.class, rollbackFor = Exception.class)//DEFAULT REQUIRED
+//@ConditionalOnProperty(havingValue = "")
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON, scopeName = "singleton")
+//1. Single and concurreny
+//Difference between Java Singleton and Spring
+/**
+ * 1. Spring’s singleton beans are shared among all the requests when your application
+ * is running on the multi-threaded environment. How to ensure that your program is thread-safe?.
+ *
+ * 2. Java singleton is per classloader and spring singleton is per application context for a bean
+ */
 public class OrderController {
 
-    private final OrderService orderService;
-    private final OrderTransformer orderTransformer;
+    private  OrderService orderService;
+    private  OrderTransformer orderTransformer;
 
     @ApiOperation(value = "getOrder", produces = APPLICATION_JSON_VALUE)
     @GetMapping(path = "/orders", produces = APPLICATION_JSON_VALUE)
@@ -47,7 +63,7 @@ public class OrderController {
         List<Fulfillment> fulfillments = orderService.createOrder(orderTransformer.dtosToDomains(fulfillmentDtos));
 
         return ResponseEntity
-                .created(URI.create("/order/"))
+                .created(URI.create("/orders/"))
                 .body(orderTransformer.domainsToDtos(fulfillments));
     }
 
@@ -77,7 +93,6 @@ public class OrderController {
     @GetMapping(path = "/orders", params = "vin", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FulfillmentDto>> getFulfillmentByVin(@RequestParam String vin) {
         return ResponseEntity.ok(orderTransformer.domainsToDtos(orderService.getFulfillmentByVin(vin)));
-
     }
 
     @ApiOperation(value = "getOrder By VIN and SKU", produces = APPLICATION_JSON_VALUE, notes = "getOrder By VIN and SKU")

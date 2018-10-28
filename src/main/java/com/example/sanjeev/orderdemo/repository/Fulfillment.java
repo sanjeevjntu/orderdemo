@@ -31,8 +31,8 @@ public class Fulfillment extends BaseEntity implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID fulfillmentId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)// Default startegy is EAGER
-    @JoinColumn(name = "ORDER_ID", nullable = false)
+    @ManyToOne//(cascade = CascadeType.ALL, fetch = FetchType.LAZY)// Default startegy is EAGER
+    @JoinColumn(name = "ORDER_ID")
     private Order order;
 
     @NotBlank

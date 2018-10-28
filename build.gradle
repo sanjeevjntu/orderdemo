@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.4.RELEASE'
+        springBootVersion = '2.0.6.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -23,8 +23,13 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    springCloudVersion = 'Finchley.SR1'
+}
+
 
 dependencies {
+    //implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-amqp')
     compile('org.springframework.boot:spring-boot-starter-batch')
